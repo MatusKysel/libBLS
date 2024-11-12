@@ -8,7 +8,7 @@ on:
 
 jobs:
   main_job:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       NIGHTLY_BUILD_FLAGS: "valgrind --leak-check=yes"
 
@@ -92,7 +92,7 @@ jobs:
         ./scripts/run_tools_test.sh
   
   linux_build_with_emscripten:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     strategy:
       matrix:
