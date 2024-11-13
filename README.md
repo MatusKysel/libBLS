@@ -81,8 +81,8 @@ Ensure that the required packages are installed by executing:
 
 ```shell
 sudo apt-get update
-sudo apt-get install -y automake cmake build-essential libprocps-dev libtool\
-                        pkg-config yasm texinfo autoconf flex bison clang-format-6.0
+sudo apt-get install -y automake cmake build-essential libgnutls28-dev libtool\
+                        pkg-config yasm texinfo autoconf clang-format-14
 ```
 
 Configure the project build with the following commands.
