@@ -32,45 +32,45 @@ jobs:
     - name: Install packages
       run: |
         sudo apt-get install -y software-properties-common
-        sudo apt-get install -y gcc-9 g++-9
-    - name: use g++-9 by default
+        sudo apt-get install -y gcc-11 1g++-11
+    - name: use g++-11 by default
       run: |
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
-        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11
+        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11
 
     - name: Install more packages
       run: |
         sudo apt-get update
-        sudo apt-get install -y clang-format-6.0 gawk sed shtool \
-          libffi-dev yasm texinfo flex bison libgnutls28-dev gcc-multilib
+        sudo apt-get install -y gawk sed shtool \
+          libffi-dev yasm texinfo libgnutls28-dev gcc-multilib
     - name: Build dependencies
       run: |
-        export CC=gcc-9
-        export CXX=g++-9
+        export CC=gcc-11
+        export CXX=g++-11
         export TARGET=all
         cd deps
         ./build.sh
 
     - name: Configure
       run: |
-        export CC=gcc-9
-        export CXX=g++-9
+        export CC=gcc-11
+        export CXX=g++-11
         export TARGET=all
         mkdir -p build && cd build
         cmake ..
     
     - name: Build
       run: |
-        export CC=gcc-9
-        export CXX=g++-9
+        export CC=gcc-11
+        export CXX=g++-11
         export TARGET=all
         cd build
         make -j$(nproc)
 
     - name: Build dependencies wasm
       run: |
-        export CC=gcc-9
-        export CXX=g++-9
+        export CC=gcc-11
+        export CXX=g++-11
         export TARGET=all
         cd deps
         ./clean.sh

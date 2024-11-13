@@ -67,7 +67,7 @@ cd ..
 ## Building from source on Mac
 
 ```shell
-brew install flex bison libtool automake cmake pkg-config yasm
+brew install libtool automake cmake pkg-config yasm
 # Configure the project and create a build directory.
 cmake -H. -Bbuild
 
