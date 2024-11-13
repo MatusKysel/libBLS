@@ -126,7 +126,6 @@ jobs:
           export CC=gcc-9
           export CXX=g++-9
           export TARGET=all
-          export CMAKE_BUILD_FLAGS="-DCOVERAGE=ON"
           cd deps
           ./build.sh
       - name: Configure all
@@ -177,7 +176,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage.info
   osx_build_and_test:
-    runs-on: macos-11
+    runs-on: macos-12
     steps:
       - name: Extract repo name
         run: echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F /
