@@ -32,7 +32,7 @@ jobs:
     - name: Install packages
       run: |
         sudo apt-get install -y software-properties-common
-        sudo apt-get install -y gcc-11 1g++-11
+        sudo apt-get install -y gcc-11 g++-11
     - name: use g++-11 by default
       run: |
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11
