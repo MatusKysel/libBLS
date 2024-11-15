@@ -12,7 +12,7 @@ defaults:
     shell: bash
 jobs:
   linux_build_and_test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Extract repo name
         run: echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F /
@@ -27,20 +27,20 @@ jobs:
       - name: install packages
         run: |
           sudo apt-get install -y software-properties-common
-          sudo apt-get install -y gcc-9 g++-9
-      - name: Use g++-9 and gcov-9 by default
+          sudo apt-get install -y gcc-11 g++-11
+      - name: Use g++-11 and gcov-11 by default
         run: >
           echo "Updating all needed alternatives"
 
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11
 
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
+          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11
 
-          sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-9 9
+          sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-11 11
 
-          sudo update-alternatives --install /usr/bin/gcov-dump gcov-dump /usr/bin/gcov-dump-9 9
+          sudo update-alternatives --install /usr/bin/gcov-dump gcov-dump /usr/bin/gcov-dump-11 11
 
-          sudo update-alternatives --install /usr/bin/gcov-tool gcov-tool /usr/bin/gcov-tool-9 9
+          sudo update-alternatives --install /usr/bin/gcov-tool gcov-tool /usr/bin/gcov-tool-11 11
 
           echo "Checking alternative for gcc"
 
@@ -77,8 +77,8 @@ jobs:
         run: >
           sudo apt-get update
 
-          sudo apt-get install -y gcc-9 g++-9 gawk sed shtool \
-            libffi-dev yasm texinfo flex bison libgnutls28-dev python3 gcc-multilib git
+          sudo apt-get install -y gawk sed shtool \
+            libffi-dev yasm texinfo libgnutls28-dev python3 gcc-multilib git
           sudo apt-get update -qq
 
           sudo apt-get install -y python3-pip
@@ -123,24 +123,23 @@ jobs:
           lcov --version
       - name: Build dependencies
         run: |
-          export CC=gcc-9
-          export CXX=g++-9
+          export CC=gcc-11
+          export CXX=g++-11
           export TARGET=all
-          export CMAKE_BUILD_FLAGS="-DCOVERAGE=ON"
           cd deps
           ./build.sh
       - name: Configure all
         run: |
-          export CC=gcc-9
-          export CXX=g++-9
+          export CC=gcc-11
+          export CXX=g++-11
           export TARGET=all
           CMAKE_BUILD_FLAGS="-DCOVERAGE=ON"
           mkdir -p build && cd build
           cmake $CMAKE_BUILD_FLAGS ..
       - name: Build all
         run: |
-          export CC=gcc-9
-          export CXX=g++-9
+          export CC=gcc-11
+          export CXX=g++-11
           export TARGET=all
           CMAKE_BUILD_FLAGS="-DCOVERAGE=ON"
           cd build
@@ -177,7 +176,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage.info
   osx_build_and_test:
-    runs-on: macos-11
+    runs-on: macos-12
     steps:
       - name: Extract repo name
         run: echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F /
@@ -213,7 +212,7 @@ jobs:
           ./threshold_encryption/te_test
           ./dkg_attack
   linux_build_with_emscripten:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         node-version:
@@ -232,9 +231,7 @@ jobs:
       - name: Install packages
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-9 g++-9 gawk sed shtool \
-            libffi-dev yasm texinfo flex bison \
-            python3 gcc-multilib
+          sudo apt-get install -y gcc-11 g++-11 gawk sed shtool libffi-dev yasm texinfo python3 gcc-multilib
           sudo apt-get update -qq
           sudo apt-get install -y python3-pip
           pip3 install --upgrade pip
@@ -247,8 +244,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Build dependencies
         run: |
-          export CC=gcc-9
-          export CXX=g++-9
+          export CC=gcc-11
+          export CXX=g++-11
           export TARGET=all
           cd deps
           ./build.sh WITH_EMSCRIPTEN=1
