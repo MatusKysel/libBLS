@@ -203,23 +203,23 @@ export CXXFLAGS="$CXXFLAGS -fPIC"
 WITH_OPENSSL="yes"
 
 WITH_BOOST="yes"
-WITH_ZLIB="no"
-WITH_ARGTABLE2="no"
-WITH_JSONRPC="no"
-WITH_JSONRPCCPP="no"
-WITH_CURL="no"
-WITH_MICRO_HTTP_D="no"
-if [ "$SKALED_DEPS_CHAIN" = "1" ];
-then
-	WITH_BOOST="no"
-else
-	WITH_ZLIB="yes"
-	WITH_ARGTABLE2="yes"
-	WITH_JSONRPC="yes"
-	WITH_JSONRPCCPP="yes"
-	WITH_CURL="yes"
-	WITH_MICRO_HTTP_D="yes"
-fi
+WITH_ZLIB="yes"
+WITH_ARGTABLE2="yes"
+WITH_JSONRPC="yes"
+WITH_JSONRPCCPP="yes"
+WITH_CURL="yes"
+WITH_MICRO_HTTP_D="yes"
+#if [ "$SKALED_DEPS_CHAIN" = "1" ];
+#then
+#	WITH_BOOST="no"
+#else
+#	WITH_ZLIB="yes"
+#	WITH_ARGTABLE2="yes"
+#	WITH_JSONRPC="yes"
+#	WITH_JSONRPCCPP="yes"
+#	WITH_CURL="yes"
+#	WITH_MICRO_HTTP_D="yes"
+#fi
 
 WITH_FF="yes"
 WITH_GMP="yes"
