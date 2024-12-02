@@ -580,8 +580,13 @@ then
 		if [[ "${WITH_EMSCRIPTEN}" -eq 1 ]];
 		then
 			BOOST_LIBRARIES="program_options"
-		else
+                else
 			BOOST_LIBRARIES="system,thread,filesystem,regex,atomic,program_options"
+                        if [ "$SKALED_DEPS_CHAIN" = "1" ];
+                        then
+                                BOOST_LIBRARIES="${BOOST_LIBRARIES},context"
+                        fi
+
 		fi
 		eval ./bootstrap.sh --prefix="$INSTALL_ROOT" --with-libraries="$BOOST_LIBRARIES"
 
