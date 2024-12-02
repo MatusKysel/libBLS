@@ -584,7 +584,7 @@ then
 			BOOST_LIBRARIES="system,thread,filesystem,regex,atomic,program_options"
                         if [ "$SKALED_DEPS_CHAIN" = "1" ];
                         then
-                                BOOST_LIBRARIES="${BOOST_LIBRARIES},context"
+                                BOOST_LIBRARIES="${BOOST_LIBRARIES},context,iostreams"
                         fi
 
 		fi
