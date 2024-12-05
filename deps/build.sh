@@ -213,6 +213,10 @@ if [ "$SKALED_DEPS_CHAIN" = "1" ];
 then
 	WITH_JSONRPC="no"
 	WITH_JSONRPCCPP="no"
+	WITH_CURL="no"
+	WITH_MICRO_HTTP_D="no"
+	WITH_ZLIB="no"
+	WITH_ARGTABLE2="no"
 fi
 
 WITH_FF="yes"
