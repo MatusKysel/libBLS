@@ -209,17 +209,10 @@ WITH_JSONRPC="yes"
 WITH_JSONRPCCPP="yes"
 WITH_CURL="yes"
 WITH_MICRO_HTTP_D="yes"
-#if [ "$SKALED_DEPS_CHAIN" = "1" ];
-#then
-#	WITH_BOOST="no"
-#else
-#	WITH_ZLIB="yes"
-#	WITH_ARGTABLE2="yes"
-#	WITH_JSONRPC="yes"
-#	WITH_JSONRPCCPP="yes"
-#	WITH_CURL="yes"
-#	WITH_MICRO_HTTP_D="yes"
-#fi
+if [ "$SKALED_DEPS_CHAIN" = "1" ];
+then
+	WITH_JSONRPC="no"
+fi
 
 WITH_FF="yes"
 WITH_GMP="yes"
