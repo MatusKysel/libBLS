@@ -212,6 +212,7 @@ WITH_MICRO_HTTP_D="yes"
 if [ "$SKALED_DEPS_CHAIN" = "1" ];
 then
 	WITH_JSONRPC="no"
+	WITH_JSONRPCCPP="no"
 fi
 
 WITH_FF="yes"
