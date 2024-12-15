@@ -91,48 +91,48 @@ endif()
 set( CLANG_FORMAT_EXCLUDE_PATTERNS
     ${CMAKE_BINARY_DIR}
     ${DEPS_SOURCES_ROOT}
-    )
+)
 include( BlsFindClangFormat )
 
 set( TOOLS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tools/")
 set( DKG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dkg/")
 
 set(sourses_bls
-		bls/bls.cpp
-		bls/BLSPrivateKeyShare.cpp
-		bls/BLSPrivateKey.cpp
-		bls/BLSPublicKeyShare.cpp
-		bls/BLSPublicKey.cpp
-		bls/BLSSignature.cpp
-		bls/BLSSigShare.cpp
-		bls/BLSSigShareSet.cpp
-		dkg/dkg.cpp
-		dkg/DKGBLSWrapper.cpp
-		dkg/DKGBLSSecret.cpp
-		third_party/cryptlite/base64.cpp
-		tools/utils.cpp
-		)
+	bls/bls.cpp
+	bls/BLSPrivateKeyShare.cpp
+	bls/BLSPrivateKey.cpp
+	bls/BLSPublicKeyShare.cpp
+	bls/BLSPublicKey.cpp
+	bls/BLSSignature.cpp
+	bls/BLSSigShare.cpp
+	bls/BLSSigShareSet.cpp
+	dkg/dkg.cpp
+	dkg/DKGBLSWrapper.cpp
+	dkg/DKGBLSSecret.cpp
+	third_party/cryptlite/base64.cpp
+	tools/utils.cpp
+)
 
 set(headers_bls
-		libBLS.h
-		bls/bls.h
-		bls/BLSPrivateKeyShare.h
-		bls/BLSPrivateKey.h
-		bls/BLSPublicKeyShare.h
-		bls/BLSPublicKey.h
-		bls/BLSSignature.h
-		bls/BLSSigShare.h
-		bls/BLSSigShareSet.h
-		dkg/dkg.h
-		dkg/DKGBLSWrapper.h
-		dkg/DKGBLSSecret.h
-		third_party/json.hpp
-		third_party/cryptlite/sha256.h
-		third_party/cryptlite/sha1.h
-		third_party/cryptlite/hmac.h
-		third_party/cryptlite/base64.h
-		tools/utils.h
-		)
+	libBLS.h
+	bls/bls.h
+	bls/BLSPrivateKeyShare.h
+	bls/BLSPrivateKey.h
+	bls/BLSPublicKeyShare.h
+	bls/BLSPublicKey.h
+	bls/BLSSignature.h
+	bls/BLSSigShare.h
+	bls/BLSSigShareSet.h
+	dkg/dkg.h
+	dkg/DKGBLSWrapper.h
+	dkg/DKGBLSSecret.h
+	third_party/json.hpp
+	third_party/cryptlite/sha256.h
+	third_party/cryptlite/sha1.h
+	third_party/cryptlite/hmac.h
+	third_party/cryptlite/base64.h
+	tools/utils.h
+)
 
 set(PROJECT_VERSION 0.2.0)
 add_definitions(-DBLS_VERSION=${PROJECT_VERSION})

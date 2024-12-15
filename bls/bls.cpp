@@ -343,6 +343,10 @@ std::pair< libff::alt_bn128_Fr, libff::alt_bn128_G2 > Bls::KeysRecover(
         throw ThresholdUtils::IncorrectInput( "not enough participants in the threshold group" );
     }
 
+    if ( shares.size() > this->n_ || coeffs.size() > this->n_ ) {
+        throw ThresholdUtils::IncorrectInput( "too many participants in the threshold group" );
+    }
+
     libff::alt_bn128_Fr secret_key = libff::alt_bn128_Fr::zero();
 
     for ( size_t i = 0; i < this->t_; ++i ) {
@@ -363,6 +367,10 @@ libff::alt_bn128_G1 Bls::SignatureRecover( const std::vector< libff::alt_bn128_G
     const std::vector< libff::alt_bn128_Fr >& coeffs ) {
     if ( shares.size() < this->t_ || coeffs.size() < this->t_ ) {
         throw ThresholdUtils::IncorrectInput( "not enough participants in the threshold group" );
+    }
+
+    if ( shares.size() > this->n_ || coeffs.size() > this->n_ ) {
+        throw ThresholdUtils::IncorrectInput( "too many participants in the threshold group" );
     }
 
     libff::alt_bn128_G1 sign = libff::alt_bn128_G1::zero();
