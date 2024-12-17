@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+
 #ifndef _CRYPTLITE_SHA256_H_
 #define _CRYPTLITE_SHA256_H_
 #include <third_party/cryptlite/base64.h>

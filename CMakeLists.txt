@@ -91,48 +91,48 @@ endif()
 set( CLANG_FORMAT_EXCLUDE_PATTERNS
     ${CMAKE_BINARY_DIR}
     ${DEPS_SOURCES_ROOT}
-    )
+)
 include( BlsFindClangFormat )
 
 set( TOOLS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tools/")
 set( DKG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dkg/")
 
 set(sourses_bls
-		bls/bls.cpp
-		bls/BLSPrivateKeyShare.cpp
-		bls/BLSPrivateKey.cpp
-		bls/BLSPublicKeyShare.cpp
-		bls/BLSPublicKey.cpp
-		bls/BLSSignature.cpp
-		bls/BLSSigShare.cpp
-		bls/BLSSigShareSet.cpp
-		dkg/dkg.cpp
-		dkg/DKGBLSWrapper.cpp
-		dkg/DKGBLSSecret.cpp
-		third_party/cryptlite/base64.cpp
-		tools/utils.cpp
-		)
+	bls/bls.cpp
+	bls/BLSPrivateKeyShare.cpp
+	bls/BLSPrivateKey.cpp
+	bls/BLSPublicKeyShare.cpp
+	bls/BLSPublicKey.cpp
+	bls/BLSSignature.cpp
+	bls/BLSSigShare.cpp
+	bls/BLSSigShareSet.cpp
+	dkg/dkg.cpp
+	dkg/DKGBLSWrapper.cpp
+	dkg/DKGBLSSecret.cpp
+	third_party/cryptlite/base64.cpp
+	tools/utils.cpp
+)
 
 set(headers_bls
-		libBLS.h
-		bls/bls.h
-		bls/BLSPrivateKeyShare.h
-		bls/BLSPrivateKey.h
-		bls/BLSPublicKeyShare.h
-		bls/BLSPublicKey.h
-		bls/BLSSignature.h
-		bls/BLSSigShare.h
-		bls/BLSSigShareSet.h
-		dkg/dkg.h
-		dkg/DKGBLSWrapper.h
-		dkg/DKGBLSSecret.h
-		third_party/json.hpp
-		third_party/cryptlite/sha256.h
-		third_party/cryptlite/sha1.h
-		third_party/cryptlite/hmac.h
-		third_party/cryptlite/base64.h
-		tools/utils.h
-		)
+	libBLS.h
+	bls/bls.h
+	bls/BLSPrivateKeyShare.h
+	bls/BLSPrivateKey.h
+	bls/BLSPublicKeyShare.h
+	bls/BLSPublicKey.h
+	bls/BLSSignature.h
+	bls/BLSSigShare.h
+	bls/BLSSigShareSet.h
+	dkg/dkg.h
+	dkg/DKGBLSWrapper.h
+	dkg/DKGBLSSecret.h
+	third_party/json.hpp
+	third_party/cryptlite/sha256.h
+	third_party/cryptlite/sha1.h
+	third_party/cryptlite/hmac.h
+	third_party/cryptlite/base64.h
+	tools/utils.h
+)
 
 set(PROJECT_VERSION 0.2.0)
 add_definitions(-DBLS_VERSION=${PROJECT_VERSION})
@@ -164,16 +164,16 @@ else()
 	set( BOOST_LIBS_4_BLS boost_program_options )
 endif()
 
-set (WITH_PROCPS OFF)
+set(WITH_PROCPS OFF)
 
 set(BLS_INCLUDE_DIRS
-		${CMAKE_CURRENT_SOURCE_DIR}
-		${CMAKE_CURRENT_SOURCE_DIR}/bls
-		${DEPS_SOURCES_ROOT}
-		${DEPS_INSTALL_ROOT}
-		${CMAKE_CURRENT_SOURCE_DIR}/deps/include
-		PARENT_SCOPE
-		)
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/bls
+    ${DEPS_SOURCES_ROOT}
+    ${DEPS_INSTALL_ROOT}
+    ${CMAKE_CURRENT_SOURCE_DIR}/deps/include
+    PARENT_SCOPE
+)
 
 target_include_directories(bls PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(bls PRIVATE ff ${CRYPTOPP_LIBRARY} ${GMPXX_LIBRARY} ${GMP_LIBRARY})
@@ -245,7 +245,9 @@ if(BUILD_TESTS)
 	if (EMSCRIPTEN)
 		target_compile_options(bls_unit_test PRIVATE -s DISABLE_EXCEPTION_CATCHING=1)
 		set_target_properties(bls_unit_test PROPERTIES LINK_FLAGS "-s DISABLE_EXCEPTION_CATCHING=1")
-	endif()
+        else()
+                target_compile_options(bls_unit_test PRIVATE -Wno-format-overflow)
+        endif()
 	target_link_libraries(bls_unit_test PRIVATE bls ${CRYPTOPP_LIBRARY} ff ${GMPXX_LIBRARY} ${GMP_LIBRARY} ${BOOST_LIBS_4_BLS})
 
 	add_test(NAME bls_tests COMMAND bls_unit_test)
@@ -255,7 +257,9 @@ if(BUILD_TESTS)
 	if (EMSCRIPTEN)
 		target_compile_options(dkg_unit_test PRIVATE -s DISABLE_EXCEPTION_CATCHING=1)
 		set_target_properties(dkg_unit_test PROPERTIES LINK_FLAGS "-s DISABLE_EXCEPTION_CATCHING=1")
-	endif()
+        else()
+                target_compile_options(dkg_unit_test PRIVATE -Wno-format-overflow)
+        endif()
 	target_link_libraries(dkg_unit_test PRIVATE bls ${CRYPTOPP_LIBRARY} ff ${GMP_LIBRARY} ${GMPXX_LIBRARY} ${BOOST_LIBS_4_BLS})
   
 	add_test(NAME dkg_tests COMMAND dkg_unit_test)
@@ -265,7 +269,9 @@ if(BUILD_TESTS)
 	if (EMSCRIPTEN)
 		target_compile_options(bls_test PRIVATE -s DISABLE_EXCEPTION_CATCHING=1)
 		set_target_properties(bls_test PROPERTIES LINK_FLAGS "-s DISABLE_EXCEPTION_CATCHING=1")
-	endif()
+        else()
+                target_compile_options(bls_test PRIVATE -Wno-format-overflow)
+        endif()
 	target_link_libraries(bls_test PRIVATE bls ${CRYPTOPP_LIBRARY} ff ${GMP_LIBRARY} ${GMPXX_LIBRARY} ${BOOST_LIBS_4_BLS})
   
 	add_test(NAME bls_test COMMAND bls_test)
@@ -281,7 +287,9 @@ if(BUILD_TESTS)
 	if (EMSCRIPTEN)
 		target_compile_options(utils_unit_test PRIVATE -s DISABLE_EXCEPTION_CATCHING=1)
 		set_target_properties(utils_unit_test PROPERTIES LINK_FLAGS "-s DISABLE_EXCEPTION_CATCHING=1")
-	endif()
+        else()
+                target_compile_options(utils_unit_test PRIVATE -Wno-format-overflow)
+        endif()
 	target_link_libraries(utils_unit_test PRIVATE bls te ${CRYPTOPP_LIBRARY} ff ${GMPXX_LIBRARY} ${GMP_LIBRARY} ${BOOST_LIBS_4_BLS})
 
 	add_test(NAME utils_tests COMMAND utils_unit_test)
