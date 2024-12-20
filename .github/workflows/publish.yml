@@ -57,7 +57,7 @@ jobs:
         export CXX=g++-11
         export TARGET=all
         mkdir -p build && cd build
-        cmake ..
+        cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
     
     - name: Build
       run: |

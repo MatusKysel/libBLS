@@ -563,17 +563,24 @@ then
 	then
 		env_restore
 		cd "$SOURCES_ROOT"
-		if [ ! -d "boost_1_68_0" ];
+		BOOST_NAME="boost_1_68_0"
+		BOOST_VERSION="1.68.0"
+		if [ "$UNIX_SYSTEM_NAME" = "Darwin" ];
 		then
-			if [ ! -f "boost_1_68_0.tar.bz2" ];
+			BOOST_NAME="boost_1_82_0"
+			BOOST_VERSION="1.82.0"
+		fi
+		if [ ! -d "${BOOST_NAME}" ];
+		then
+			if [ ! -f "${BOOST_NAME}.tar.bz2" ];
 			then
 				eval echo -e "${COLOR_INFO}downloading it${COLOR_DOTS}...${COLOR_RESET}"
-				eval "$WGET" https://sourceforge.net/projects/boost/files/boost/1.68.0/boost_1_68_0.tar.bz2
+				eval "$WGET" https://sourceforge.net/projects/boost/files/boost/${BOOST_VERSION}/${BOOST_NAME}.tar.bz2
 			fi
 			echo -e "${COLOR_INFO}unpacking it${COLOR_DOTS}...${COLOR_RESET}"
-            tar -xf boost_1_68_0.tar.bz2
+            tar -xf ${BOOST_NAME}.tar.bz2
 		fi
-		cd boost_1_68_0
+		cd ${BOOST_NAME}
 		echo -e "${COLOR_INFO}configuring and building it${COLOR_DOTS}...${COLOR_RESET}"
 		if [[ "${WITH_EMSCRIPTEN}" -eq 1 ]];
 		then
@@ -595,7 +602,7 @@ then
 	else
 		if [ "$UNIX_SYSTEM_NAME" = "Darwin" ];
 		then
-			eval ./b2 cxxflags=-fPIC toolset=clang cxxstd=14 cflags=-fPIC "${PARALLEL_MAKE_OPTIONS}" --prefix="$INSTALL_ROOT" --layout=system variant=debug link=static threading=multi install
+			eval ./b2 cxxflags=-fPIC toolset=clang cxxstd=17 cflags=-fPIC "${PARALLEL_MAKE_OPTIONS}" --prefix="$INSTALL_ROOT" --layout=system variant=debug link=static threading=multi install
 		else
 			if [[ "${WITH_EMSCRIPTEN}" -eq 1 ]];
 			then
@@ -684,21 +691,26 @@ then
 		# requiired for libff
 		env_restore
 		cd "$SOURCES_ROOT"
-		if [ ! -d "gmp-6.1.2" ];
+		GMP_NAME="gmp-6.1.2"
+		if [ "$UNIX_SYSTEM_NAME" = "Darwin" ];
 		then
-			if [ ! -f "gmp-6.1.2.tar.xz" ];
+			GMP_NAME="gmp-6.3.0"
+		fi
+		if [ ! -d "${GMP_NAME}" ];
+		then
+			if [ ! -f ""${GMP_NAME}".tar.xz" ];
 				then
 			echo -e "${COLOR_INFO}getting it from gmp website${COLOR_DOTS}...${COLOR_RESET}"
-			eval "$WGET" https://ftp.gnu.org/gnu/gmp/gmp-6.1.2.tar.xz
+			eval "$WGET" https://ftp.gnu.org/gnu/gmp/"${GMP_NAME}".tar.xz
 			fi
 			echo -e "${COLOR_INFO}unpacking it${COLOR_DOTS}...${COLOR_RESET}"
-			eval tar -xf gmp-6.1.2.tar.xz
+			eval tar -xf "${GMP_NAME}".tar.xz
 		fi
-		cd gmp-6.1.2
+		cd "${GMP_NAME}"
 		echo -e "${COLOR_INFO}configuring it${COLOR_DOTS}...${COLOR_RESET}"
 		if [ "$UNIX_SYSTEM_NAME" = "Darwin" ];
 		then
-			eval ./configure "${CONF_CROSSCOMPILING_OPTS_GENERIC}" "${CONF_DEBUG_OPTIONS}" --enable-cxx --enable-static --disable-shared --build=x86_64-apple-darwin#{OS.kernel_version.major} --prefix="$INSTALL_ROOT"
+			eval ./configure "${CONF_CROSSCOMPILING_OPTS_GENERIC}" "${CONF_DEBUG_OPTIONS}" --enable-cxx --enable-static --disable-shared --disable-assembly --build=x86_64-apple-darwin#{OS.kernel_version.major} --prefix="$INSTALL_ROOT"
 		else
 			if [[ "${WITH_EMSCRIPTEN}" -eq 1 ]];
 			then
@@ -875,10 +887,10 @@ then
 			cd curl/build
 			$MAKE ${PARALLEL_MAKE_OPTIONS}
 			$MAKE ${PARALLEL_MAKE_OPTIONS} install
-			if [ "$DEBUG" = "1" ];
-			then
-				mv "$INSTALL_ROOT/lib/libcurl-d.a" "$INSTALL_ROOT/lib/libcurl.a" &> /dev/null
-			fi
+			# if [ "$DEBUG" = "1" ];
+			# then
+			# 	mv "$INSTALL_ROOT/lib/libcurl-d.a" "$INSTALL_ROOT/lib/libcurl.a" &> /dev/null
+			# fi
 			cd ..
 			export PKG_CONFIG_PATH=$PKG_CONFIG_PATH_SAVED
 			export PKG_CONFIG_PATH_SAVED=
@@ -981,7 +993,6 @@ then
 				echo -e "${COLOR_INFO}unpacking it${COLOR_DOTS}...${COLOR_RESET}"
 				unzip -o "$PREDOWNLOADED_ROOT/libjson-rpc-cpp.zip"
 				cp -r libjson-rpc-cpp-develop libjson-rpc-cpp
-
 				echo -e "${COLOR_INFO}configuring it${COLOR_DOTS}...${COLOR_RESET}"
 				cd libjson-rpc-cpp
 				mkdir -p build
@@ -1006,6 +1017,7 @@ then
 					-DARGTABLE_INCLUDE_DIR="$SOURCES_ROOT/argtable2/src" \
 					-DARGTABLE_LIBRARY="$INSTALL_ROOT/lib/libargtable2${DEBUG_D}.a" \
 					-DJSONCPP_INCLUDE_DIR="$INSTALL_ROOT/include" \
+					-DJSONCPP_LIBRARY="$INSTALL_ROOT/lib/libjsoncpp.a" \
 					..
 				cd ..
 			else
