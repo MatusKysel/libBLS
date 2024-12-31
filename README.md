@@ -3,7 +3,7 @@
 [![Build and test libBLS](https://github.com/skalenetwork/libBLS/actions/workflows/test.yml/badge.svg)](https://github.com/skalenetwork/libBLS/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/skalenetwork/libBLS/branch/develop/graph/badge.svg)](https://codecov.io/gh/skalenetwork/libBLS)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3745/badge)](https://bestpractices.coreinfrastructure.org/projects/3745)
-[![Discord](https://img.shields.io/discord/534485763354787851.svg)](https://discord.gg/vvUtWJB)
+[![Discord](https://img.shields.io/discord/534485763354787851.svg)](https://discord.com/invite/gM5XBy6)
 
 A mathematical library written in C++ that supports BLS threshold signatures, Distributed Key Generation (DKG) and Threshold Encryption (TE).
 
