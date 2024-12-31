@@ -130,6 +130,7 @@ rm -rf ./zlib
 rm -rf ./argtable2
 rm -rf ./curl
 rm -rf ./libmicrohttpd
+rm -rf ./boost
 echo "Done (all clean)."
 
 #finish

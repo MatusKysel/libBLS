@@ -203,22 +203,20 @@ export CXXFLAGS="$CXXFLAGS -fPIC"
 WITH_OPENSSL="yes"
 
 WITH_BOOST="yes"
-WITH_ZLIB="no"
-WITH_ARGTABLE2="no"
-WITH_JSONRPC="no"
-WITH_JSONRPCCPP="no"
-WITH_CURL="no"
-WITH_MICRO_HTTP_D="no"
+WITH_ZLIB="yes"
+WITH_ARGTABLE2="yes"
+WITH_JSONRPC="yes"
+WITH_JSONRPCCPP="yes"
+WITH_CURL="yes"
+WITH_MICRO_HTTP_D="yes"
 if [ "$SKALED_DEPS_CHAIN" = "1" ];
 then
-	WITH_BOOST="no"
-else
-	WITH_ZLIB="yes"
-	WITH_ARGTABLE2="yes"
-	WITH_JSONRPC="yes"
-	WITH_JSONRPCCPP="yes"
-	WITH_CURL="yes"
-	WITH_MICRO_HTTP_D="yes"
+	WITH_JSONRPC="no"
+	WITH_JSONRPCCPP="no"
+	WITH_CURL="no"
+	WITH_MICRO_HTTP_D="no"
+	WITH_ZLIB="no"
+	WITH_ARGTABLE2="no"
 fi
 
 WITH_FF="yes"
@@ -587,8 +585,13 @@ then
 		if [[ "${WITH_EMSCRIPTEN}" -eq 1 ]];
 		then
 			BOOST_LIBRARIES="program_options"
-		else
+                else
 			BOOST_LIBRARIES="system,thread,filesystem,regex,atomic,program_options"
+                        if [ "$SKALED_DEPS_CHAIN" = "1" ];
+                        then
+                                BOOST_LIBRARIES="${BOOST_LIBRARIES},context,iostreams,fiber,log,chrono"
+                        fi
+
 		fi
 		eval ./bootstrap.sh --prefix="$INSTALL_ROOT" --with-libraries="$BOOST_LIBRARIES"
 
@@ -884,10 +887,10 @@ then
 			cd curl/build
 			$MAKE ${PARALLEL_MAKE_OPTIONS}
 			$MAKE ${PARALLEL_MAKE_OPTIONS} install
-			if [ "$DEBUG" = "1" ];
-			then
-				mv "$INSTALL_ROOT/lib/libcurl-d.a" "$INSTALL_ROOT/lib/libcurl.a" &> /dev/null
-			fi
+			# if [ "$DEBUG" = "1" ];
+			# then
+			# 	mv "$INSTALL_ROOT/lib/libcurl-d.a" "$INSTALL_ROOT/lib/libcurl.a" &> /dev/null
+			# fi
 			cd ..
 			export PKG_CONFIG_PATH=$PKG_CONFIG_PATH_SAVED
 			export PKG_CONFIG_PATH_SAVED=
@@ -990,7 +993,6 @@ then
 				echo -e "${COLOR_INFO}unpacking it${COLOR_DOTS}...${COLOR_RESET}"
 				unzip -o "$PREDOWNLOADED_ROOT/libjson-rpc-cpp.zip"
 				cp -r libjson-rpc-cpp-develop libjson-rpc-cpp
-
 				echo -e "${COLOR_INFO}configuring it${COLOR_DOTS}...${COLOR_RESET}"
 				cd libjson-rpc-cpp
 				mkdir -p build
@@ -1015,6 +1017,7 @@ then
 					-DARGTABLE_INCLUDE_DIR="$SOURCES_ROOT/argtable2/src" \
 					-DARGTABLE_LIBRARY="$INSTALL_ROOT/lib/libargtable2${DEBUG_D}.a" \
 					-DJSONCPP_INCLUDE_DIR="$INSTALL_ROOT/include" \
+					-DJSONCPP_LIBRARY="$INSTALL_ROOT/lib/libjsoncpp.a" \
 					..
 				cd ..
 			else
