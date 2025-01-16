@@ -3,7 +3,7 @@
 [![Build and test libBLS](https://github.com/skalenetwork/libBLS/actions/workflows/test.yml/badge.svg)](https://github.com/skalenetwork/libBLS/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/skalenetwork/libBLS/branch/develop/graph/badge.svg)](https://codecov.io/gh/skalenetwork/libBLS)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/3745/badge)](https://bestpractices.coreinfrastructure.org/projects/3745)
-[![Discord](https://img.shields.io/discord/534485763354787851.svg)](https://discord.gg/vvUtWJB)
+[![Discord](https://img.shields.io/discord/534485763354787851.svg)](https://discord.com/invite/gM5XBy6)
 
 A mathematical library written in C++ that supports BLS threshold signatures, Distributed Key Generation (DKG) and Threshold Encryption (TE).
 
@@ -67,7 +67,7 @@ cd ..
 ## Building from source on Mac
 
 ```shell
-brew install flex bison libtool automake cmake pkg-config yasm
+brew install libtool automake cmake pkg-config yasm
 # Configure the project and create a build directory.
 cmake -H. -Bbuild
 
@@ -81,8 +81,8 @@ Ensure that the required packages are installed by executing:
 
 ```shell
 sudo apt-get update
-sudo apt-get install -y automake cmake build-essential libprocps-dev libtool\
-                        pkg-config yasm texinfo autoconf flex bison clang-format-6.0
+sudo apt-get install -y automake cmake build-essential libgnutls28-dev libtool\
+                        pkg-config yasm texinfo autoconf clang-format-14
 ```
 
 Configure the project build with the following commands.

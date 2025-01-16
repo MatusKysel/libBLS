@@ -114,29 +114,23 @@ rm -f ./*.tar.bz2
 rm -f ./*.zip
 echo "Cleaning upacked library folders..."
 rm -rf ./libiconv-1.15
-rm -rf ./zlib
 rm -rf ./openssl
 rm -rf ./curl
 rm -rf ./libuv
 rm -rf ./libwebsockets
-rm -rf ./boost_1_68_0
-rm -rf ./argtable2
-rm -rf ./nettle-2.0
-rm -rf ./nettle-3.4.1
-rm -rf ./gnutls-3.6.5
+rm -rf ./boost*
 rm -rf ./libmicrohttpd
 rm -rf ./jsoncpp
-rm -rf ./libjson-rpc-cpp
 rm -rf ./libcryptopp
-rm -rf ./gmp-6.1.2
+rm -rf ./gmp-6*
 rm -rf ./libff
 rm -rf ./emsdk
-rm -rf ./jsoncpp
 rm -rf ./libjson-rpc-cpp*
 rm -rf ./zlib
 rm -rf ./argtable2
 rm -rf ./curl
 rm -rf ./libmicrohttpd
+rm -rf ./boost
 echo "Done (all clean)."
 
 #finish

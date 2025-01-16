@@ -5,39 +5,39 @@ project(libTE)
 option(BUILD_TESTS "Build tests" ON)
 
 if(BUILD_TESTS)
-	enable_testing()
+    enable_testing()
 endif()
 
 set(sources
-            threshold_encryption.cpp
-            TEDecryptSet.cpp
-            TEPrivateKeyShare.cpp
-            TEPrivateKey.cpp
-            TEPublicKey.cpp
-            TEPublicKeyShare.cpp
-            ${DKG_DIR}/dkg.cpp
-            ${DKG_DIR}/DKGTEWrapper.cpp
-            ${DKG_DIR}/DKGTESecret.cpp
-            ${TOOLS_DIR}/utils.cpp
+    threshold_encryption.cpp
+    TEDecryptSet.cpp
+    TEPrivateKeyShare.cpp
+    TEPrivateKey.cpp
+    TEPublicKey.cpp
+    TEPublicKeyShare.cpp
+    ${DKG_DIR}/dkg.cpp
+    ${DKG_DIR}/DKGTEWrapper.cpp
+    ${DKG_DIR}/DKGTESecret.cpp
+    ${TOOLS_DIR}/utils.cpp
 )
 
 set(headers
-            threshold_encryption.h
-            TEDecryptSet.h
-            TEPrivateKeyShare.h
-            TEPrivateKey.h
-            TEPublicKey.h
-            TEPublicKeyShare.h
-            ${DKG_DIR}/dkg.h
-            ${DKG_DIR}/DKGTEWrapper.h
-            ${DKG_DIR}/DKGTESecret.h
-            ${TOOLS_DIR}/utils.h
+    threshold_encryption.h
+    TEDecryptSet.h
+    TEPrivateKeyShare.h
+    TEPrivateKey.h
+    TEPublicKey.h
+    TEPublicKeyShare.h
+    ${DKG_DIR}/dkg.h
+    ${DKG_DIR}/DKGTEWrapper.h
+    ${DKG_DIR}/DKGTESecret.h
+    ${TOOLS_DIR}/utils.h
 )
 
 set(PROJECT_VERSION 0.2.0)
 
-set (THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../)
-set (TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../)
+set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../)
+set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../)
 
 add_library(te ${sources} ${headers})
 
@@ -58,37 +58,40 @@ if (EMSCRIPTEN)
 endif()
 
 if (BUILD_TESTS)
-	add_executable(te_unit_test ../test/unit_tests_te.cpp)
-	target_include_directories(te_unit_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${THIRD_PARTY_DIR})
+    add_executable(te_unit_test ../test/unit_tests_te.cpp)
+    target_include_directories(te_unit_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${THIRD_PARTY_DIR})
     if (EMSCRIPTEN)
-		target_compile_options(te_unit_test PRIVATE -s DISABLE_EXCEPTION_CATCHING=1)
-		set_target_properties(te_unit_test PROPERTIES LINK_FLAGS "-s DISABLE_EXCEPTION_CATCHING=1")
-	endif()
+        target_compile_options(te_unit_test PRIVATE -s DISABLE_EXCEPTION_CATCHING=1)
+        set_target_properties(te_unit_test PROPERTIES LINK_FLAGS "-s DISABLE_EXCEPTION_CATCHING=1")
+    else()
+        target_compile_options(te_unit_test PRIVATE -Wno-format-overflow)
+    endif()
     target_link_libraries(te_unit_test PRIVATE te ${CRYPTOPP_LIBRARY} ff ${GMPXX_LIBRARY} ${GMP_LIBRARY})
 
-	add_test(NAME te_tests COMMAND te_unit_test)
+    add_test(NAME te_tests COMMAND te_unit_test)
 
     add_executable(te_test ../test/test_TE_wrappers.cpp)
     target_include_directories(te_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${THIRD_PARTY_DIR})
     if (EMSCRIPTEN)
-		target_compile_options(te_test PRIVATE -s DISABLE_EXCEPTION_CATCHING=1)
-		set_target_properties(te_test PROPERTIES LINK_FLAGS "-s DISABLE_EXCEPTION_CATCHING=1")
-	endif()
+        target_compile_options(te_test PRIVATE -s DISABLE_EXCEPTION_CATCHING=1)
+        set_target_properties(te_test PROPERTIES LINK_FLAGS "-s DISABLE_EXCEPTION_CATCHING=1")
+    else()
+        target_compile_options(te_test PRIVATE -Wno-format-overflow)
+    endif()
     target_link_libraries(te_test PRIVATE te ${CRYPTOPP_LIBRARY} ff ${GMPXX_LIBRARY} ${GMP_LIBRARY})
 
     if (EMSCRIPTEN)
         add_executable(encrypt_message ../test/encryptMessageJS.cpp)
         target_include_directories(encrypt_message PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${THIRD_PARTY_DIR})
-		target_compile_options(encrypt_message PRIVATE -s DISABLE_EXCEPTION_CATCHING=1)
-		set_target_properties(encrypt_message PROPERTIES LINK_FLAGS "-s EXIT_RUNTIME=1 -s USE_PTHREADS=0 -s EXPORTED_FUNCTIONS=['_main'] -s MAIN_MODULE=1 --bind")
+        target_compile_options(encrypt_message PRIVATE -s DISABLE_EXCEPTION_CATCHING=1)
+        set_target_properties(encrypt_message PROPERTIES LINK_FLAGS "-s EXIT_RUNTIME=1 -s USE_PTHREADS=0 -s EXPORTED_FUNCTIONS=['_main'] -s MAIN_MODULE=1 --bind")
         target_link_libraries(encrypt_message PRIVATE te ${CRYPTOPP_LIBRARY} ff ${GMPXX_LIBRARY} ${GMP_LIBRARY})
     endif()
 
     if(NOT EMSCRIPTEN AND NOT APPLE)
         add_executable(te_sample_sgx ../test/te_sample_sgx.cpp)
-	    target_include_directories(te_sample_sgx PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${THIRD_PARTY_DIR})
-        target_link_libraries(te_sample_sgx PRIVATE te bls ${CRYPTOPP_LIBRARY} ff ${GMPXX_LIBRARY} ${GMP_LIBRARY}
-                              jsonrpccpp-client jsonrpccpp-server jsonrpccpp-common jsoncpp curl pthread ssl crypto z idn2)
+        target_include_directories(te_sample_sgx PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${THIRD_PARTY_DIR})
+        target_link_libraries(te_sample_sgx PRIVATE te bls ${CRYPTOPP_LIBRARY} ff ${GMPXX_LIBRARY} ${GMP_LIBRARY} jsonrpccpp-client jsonrpccpp-server jsonrpccpp-common jsoncpp curl pthread ssl crypto z idn2)
     endif()
 
     add_test(NAME te_wrap_tests COMMAND te_unit_test)
